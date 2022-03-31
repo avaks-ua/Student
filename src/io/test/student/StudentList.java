@@ -1,12 +1,23 @@
 package io.test.student;
 
+import java.util.Arrays;
+
 public class StudentList {
 
-    private final Student[] list = new Student[100];
+    private Student[] list = new Student[2];
     int p = 0;
 
     public void add(Student s){
-        list[p++] = s;
+        if(p > list.length-1)
+            expandList();
+         list[p++] = s;
+    }
+
+    private void expandList() {
+        Student[] newList = new Student[list.length*2];
+        for(int il=0; il<list.length;il++)
+            newList[il] = list[il];
+        list = newList;
     }
 
     public Student get(int n){
@@ -37,10 +48,11 @@ public class StudentList {
                         list[index] = list[index + 1];
                     else {
                         this.list[index] = null;
+                        p = p - 1;
                         break;
                     }
                 }
-                p = p - 1;
+
                 return true;
             }
             }
